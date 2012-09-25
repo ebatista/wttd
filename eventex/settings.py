@@ -5,7 +5,7 @@ from unipath import Path
 PROJECT_DIR = Path(__file__).parent
 
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
