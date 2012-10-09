@@ -42,10 +42,11 @@ class SubscriptionUniqueTest(TestCase):
                         email='outro@email.com', phone='11-99999999')
         self.assertRaises(IntegrityError, s.save)
          
-    def test_email_unique(self):
-        s = Subscription(name='Eduardo Batista', cpf='01987654321',
+    def test_email_can_repeat(self):
+        'Email is not unique anymore.'
+        s = Subscription.objects.create(name='Eduardo Batista', cpf='01987654321',
                         email='ebatista@gmail.com', phone='11-99999999')
-        self.assertRaises(IntegrityError, s.save)
+        self.assertEqual(2, s.pk)
         
 
 
