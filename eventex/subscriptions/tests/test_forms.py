@@ -2,7 +2,7 @@
 from django.test import TestCase
 from eventex.subscriptions.forms import SubscriptionForm
 
-class SubscriptionFromTest(TestCase):
+class SubscriptionFormTest(TestCase):
     def test_has_fields(self):
         'Form must have 4 fields.'
         form = SubscriptionForm()
@@ -23,12 +23,20 @@ class SubscriptionFromTest(TestCase):
         form = self.make_validated_form(email='')
         self.assertFalse(form.errors)
 
+    def test_must_inform_email_or_phone(self):
+        'Email and Phone are optional, but one must be informed.'
+        form = self.make_validated_form(email='', phone_0='', phone_1='')
+        self.assertItemsEqual(['__all__'], form.errors)
+    
+    def test_name_must_be_capitalized(self):
+        'Name must be capitalized.'
+        form = self.make_validated_form(name='EDUARDO batista')
+        self.assertEqual('Eduardo Batista', form.cleaned_data['name'])
+
     def make_validated_form(self, **kwargs):
         data = dict(name='Eduardo Batista', email='ebatista@gmail.com',
-                    cpf='12345678901', phone='11-11111111')
+                    cpf='12345678901', phone_0='11', phone_1='11111111')
         data.update(kwargs)
         form = SubscriptionForm(data)
         form.is_valid()
         return form
-
-       
