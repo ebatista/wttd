@@ -55,3 +55,8 @@ class Talk(models.Model):
         return '/palestras/%d/' % self.pk
 
 
+class Course(Talk):
+    slots = models.IntegerField()
+    notes = models.TextField()
+
+    objects = PeriodManager()
